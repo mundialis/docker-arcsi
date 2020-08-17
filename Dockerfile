@@ -10,6 +10,9 @@ conda update --yes conda && \
 conda install --yes python=3.7 arcsi cgal && \
 conda clean --yes -t
 
+# add debian packages required by arcsi
+RUN apt-get update && apt-get install -y libcgal13
+
 # set gdal paths
 ENV GDAL_DRIVER_PATH /opt/conda/lib/gdalplugins:$GDAL_DRIVER_PATH
 ENV GDAL_DATA /opt/conda/share/gdal
