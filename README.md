@@ -124,6 +124,6 @@ docker run -i -t -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem arcsi/arcsi \
 
 ### See also
 
-See http://spectraldifferences.wordpress.com/tag/arcsi/ by Dan Clewley and Pete Bunting for a good tutorial on how to use ARCSI via the command line to do atmospheric correction of Landsat images. Support for ARCSI is available via https://bitbucket.org/petebunting/arcsi and rsgislib-support@googlegroups.com. Finally, thanks to the arcsi and rsgislib authors for making their great code publically available. 
+See http://spectraldifferences.wordpress.com/tag/arcsi/ by Dan Clewley and Pete Bunting for a good tutorial on how to use ARCSI via the command line to do atmospheric correction of Landsat images. Support for ARCSI is available via https://github.com/remotesensinginfo/arcsi and rsgislib-support@googlegroups.com. Finally, thanks to the arcsi and rsgislib authors for making their great code publically available. 
 
 Thanks to Edward P. Morris and Angelos Tzotsos for their work on the ARCSI Dockerfile.
