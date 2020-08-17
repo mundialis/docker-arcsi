@@ -3,7 +3,7 @@ A Docker image packaging Dr Pete Buntings Python Atmospheric and Radiometric Cor
 
 This image is based on the official continuumio miniconda3 release with Python 3.5, minimal optimisation and installation of arcsi + dependencies using the conda package manager. Paths and Debian libraries required for proper functioning of ARCSI are updated.
 
-### Setup
+### Setup and download
 To set up a ARCSI Docker container on your system, first ensure you have Docker installed; follow the instructions at https://docs.docker.com/installation/
 
 To use the image, either pull the latest trusted docker image build (~850 MB) from https://hub.docker.com/r/mundialis/arcsi/ by doing this:
@@ -108,18 +108,25 @@ arcsi.py --sensor sen2 -i ${S2IMG}.SAFE/S2A_OPER_MTD_SAFL1C_PDMC_20170119T125545
 
 ```
 # define name of Sentinel-2 scene - note: omit: .SAFE
-S2IMG=S2A_MSIL1C_20170327T105021_N0204_R051_T31UFT_20170327T105021
-DEM=srtm_30m_myregion.tif
-MY_S2_PATH=/path/to/S2_data/
-MY_DEM_PATH=/path/to/DEM_data/
+S2IMG=S2A_OPER_PRD_MSIL1C_PDMC_20160329T134511_R089_V20160325T025800_20160325T025800
+DEM=nasadem_myregion.tif
+OUTDIR=arcsi_output_AOT_inv
+MY_S2_PATH=$HOME/tmp/s2data/
+MY_DEM_PATH=$HOME/tmp/s2data/
+
+# Note: the S2 XML name differs between ESA https://scihub.copernicus.eu/dhus/ and USGS https://earthexplorer.usgs.gov/
+## ESA XML name:
+# XML=MTD_MSIL1C.xml
+## USGS (modified XML name!):
+XML=$(echo $S2IMG | sed 's+PRD_MSIL1C+MTD_SAFL1C+g')
 
 # run ARCSI (we use volume mapping to make S2 and DEM visible inside the docker container)
-docker run -i -t -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem  mundialis/arcsi \
-       arcsi.py --sensor sen2 -i /data/${S2IMG}.SAFE/MTD_MSIL1C.xml -o /data/${S2IMG}.SAFE/output \
+docker run -it --rm -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem mundialis/arcsi \
+       arcsi.py --sensor sen2 -i /data/${S2IMG}.SAFE/$XML.xml -o /data/${S2IMG}.SAFE/output \
        --tmpath /tmp -f KEA --stats -p CLOUDS RAD DOSAOTSGL SREF \
        --aeroimg /opt/conda/share/arcsi/WorldAerosolParams.kea \
        --atmosimg /opt/conda/share/arcsi/WorldAtmosphereParams.kea \
-       --dem /dem/${DEM} --minaot 0.05 --maxaot 0.6
+       --dem /dem/${DEM} --demnodata 0 --minaot 0.05 --maxaot 0.6
 ```
 
 ### See also
