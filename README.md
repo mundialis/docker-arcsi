@@ -114,7 +114,7 @@ MY_S2_PATH=/path/to/S2_data/
 MY_DEM_PATH=/path/to/DEM_data/
 
 # run ARCSI (we use volume mapping to make S2 and DEM visible inside the docker container)
-docker run -i -t -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem arcsi/arcsi \
+docker run -i -t -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem  mundialis/arcsi \
        arcsi.py --sensor sen2 -i /data/${S2IMG}.SAFE/MTD_MSIL1C.xml -o /data/${S2IMG}.SAFE/output \
        --tmpath /tmp -f KEA --stats -p CLOUDS RAD DOSAOTSGL SREF \
        --aeroimg /opt/conda/share/arcsi/WorldAerosolParams.kea \

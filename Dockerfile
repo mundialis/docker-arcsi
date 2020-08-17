@@ -7,7 +7,7 @@ LABEL maintainer="neteler@mundialis.de"
 RUN conda update --yes -n base conda
 RUN conda config --add channels conda-forge && \
 conda update --yes conda && \
-conda install --yes python=3.7 arcsi cgal && \
+conda install --yes -c conda-forge arcsi=3.8.1 cgal && \
 conda clean --yes -t
 
 # add debian packages required by arcsi
