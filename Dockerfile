@@ -3,11 +3,13 @@ FROM continuumio/miniconda3:latest
 LABEL authors="Angelos Tzotsos,Markus Neteler"
 LABEL maintainer="neteler@mundialis.de"
 
+# Latest ARCSI release: https://github.com/remotesensinginfo/arcsi/releases
+
 # update conda and install arcsi using conda package manager and clean up (rm tar packages to save space)
 RUN conda update --yes -n base conda
 RUN conda config --add channels conda-forge && \
 conda update --yes conda && \
-conda install --yes -c conda-forge arcsi=3.8.1 cgal && \
+conda install --yes -c conda-forge arcsi && \
 conda clean --yes -t
 
 # add debian packages required by arcsi
