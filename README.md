@@ -1,5 +1,5 @@
 # docker-arcsi
-A Docker image packaging Dr Pete Buntings Python Atmospheric and Radiometric Correction of Satellite Imagery (ARCSI) software (https://www.arcsi.remotesensing.info/).
+A Docker image packaging Dr Pete Buntings Python Atmospheric and Radiometric Correction of Satellite Imagery (ARCSI) software (https://www.arcsi.remotesensing.info/ and https://github.com/remotesensinginfo/arcsi).
 
 This image is based on the official continuumio miniconda3 release with Python 3.5, minimal optimisation and installation of arcsi + dependencies using the conda package manager. Paths and Debian libraries required for proper functioning of ARCSI are updated.
 
@@ -129,8 +129,27 @@ docker run -it --rm -v ${MY_S2_PATH}:/data -v ${MY_DEM_PATH}:/dem mundialis/arcs
        --dem /dem/${DEM} --demnodata 0 --minaot 0.05 --maxaot 0.6
 ```
 
+For the resulting band assignments, use `gdalinfo`. E.g.
+
+```
+gdalinfo  output/*_rad_srefdem_stdsref.kea | grep 'Band \|Description'
+```
+
+Sentinel-2 bands:
+
+- Band 1: Blue
+- Band 2: Green
+- Band 3: Red
+- Band 4: RE_B5
+- Band 5: RE_B6
+- Band 6: RE_B7
+- Band 7: NIR_B8
+- Band 8: NIR_B8A
+- Band 9: SWIR1
+- Band 10: SWIR2
+
 ### See also
 
-See http://spectraldifferences.wordpress.com/tag/arcsi/ by Dan Clewley and Pete Bunting for a good tutorial on how to use ARCSI via the command line to do atmospheric correction of Landsat images. Support for ARCSI is available via https://github.com/remotesensinginfo/arcsi and rsgislib-support@googlegroups.com. Finally, thanks to the arcsi and rsgislib authors for making their great code publically available. 
+See http://spectraldifferences.wordpress.com/tag/arcsi/ by Dan Clewley and Pete Bunting for a good tutorial on how to use ARCSI via the command line to do atmospheric correction of Landsat images. Support for ARCSI is available via https://github.com/remotesensinginfo/arcsi and https://groups.google.com/g/rsgislib-support. Finally, thanks to the arcsi and rsgislib authors for making their great code publically available. 
 
 Thanks to Edward P. Morris and Angelos Tzotsos for their work on the ARCSI Dockerfile.
